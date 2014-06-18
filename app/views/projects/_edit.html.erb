@@ -1,0 +1,5 @@
+<!-- We replace this view only to add :multipart support -->
+<%= labelled_form_for @project, :html => { :multipart => true } do |f| %>
+<%= render :partial => 'form', :locals => { :f => f } %>
+<%= submit_tag l(:button_save) %>
+<% end %>
