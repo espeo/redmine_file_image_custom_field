@@ -1,29 +1,43 @@
-CustomFieldValue.module_eval do
-  def is_file_format?
-    custom_field.field_format.in? %w[file image]
+module CustomFieldValuePatch
+  def self.included(base)
+    base.extend         ClassMethods
+    base.send :include, InstanceMethods
   end
+  
+  module ClassMethods
+  end
+  
+  module InstanceMethods
+    def is_file_format?
+      custom_field.field_format.in? %w[file image]
+    end
 
-  def value=(value)
-    @value = value
-    if is_file_format?
-      if value.is_a? ActionDispatch::Http::UploadedFile
-        if uploader.store!(value)
-          @value = uploader.filename
-        else
-          @value = value_was || nil
+    def value=(value)
+      @value = value
+      if is_file_format?
+        if value.is_a? ActionDispatch::Http::UploadedFile
+          if uploader.store!(value)
+            @value = uploader.filename
+          else
+            @value = value_was || nil
+          end
         end
       end
+      @value
     end
-    @value
-  end
 
-  def uploader
-    @uploader ||= ImageUploader.new(customized, "custom_field-#{custom_field.id}")
-    @uploader.retrieve_from_store!(value) if value
-    @uploader
-  end
+    def uploader
+      @uploader ||= ImageUploader.new(customized, "custom_field-#{custom_field.id}")
+      @uploader.retrieve_from_store!(value) if value
+      @uploader
+    end
 
-  def file_thumb_url
-    uploader.versions[:thumb].url || uploader.url
+    def file_thumb_url
+      uploader.versions[:thumb].url || uploader.url
+    end
   end
+end
+
+Rails.application.config.to_prepare do
+  CustomFieldValue.send :include, CustomFieldValuePatch
 end
