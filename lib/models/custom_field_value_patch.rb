@@ -2,6 +2,12 @@ module CustomFieldValuePatch
   def self.included(base)
     base.extend         ClassMethods
     base.send :include, InstanceMethods
+
+    base.class_eval do
+      unloadable
+
+      alias_method_chain :value=, :file
+    end
   end
   
   module ClassMethods
@@ -12,7 +18,7 @@ module CustomFieldValuePatch
       custom_field.field_format.in? %w[file image]
     end
 
-    def value=(value)
+    def value_with_file=(value)
       @value = value
       if is_file_format?
         if value.is_a? ActionDispatch::Http::UploadedFile
