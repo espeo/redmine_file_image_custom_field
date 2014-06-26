@@ -15,7 +15,7 @@ module CustomFieldValuePatch
   
   module InstanceMethods
     def is_file_format?
-      custom_field.field_format.in? %w[file image]
+      custom_field.field_format.in? %w(file image)
     end
 
     def value_with_file=(value)
