@@ -3,12 +3,17 @@ require_dependency 'redmine/field_format/file_format'
 module Redmine
   module FieldFormat
     class ImageFormat < FileFormat
+      unloadable
+
       add 'image'
       self.form_partial = 'custom_fields/formats/image'
 
       def formatted_value(view, custom_field, value, customized=nil, html=false)
+        uploader = self.class.uploader_for(custom_field, customized, value)
+
         if html
-          view.image_tag value.to_s
+          binding.pry
+          view.link_to view.image_tag(uploader.versions[:thumb].url || uploader.url), uploader.url
         else
           value.to_s
         end
@@ -16,6 +21,12 @@ module Redmine
 
       def edit_tag(view, tag_id, tag_name, custom_value, options={})
         view.file_field_tag(tag_name, options.merge(:id => tag_id)) + view.image_tag(custom_value.file_thumb_url)
+      end
+
+      def self.uploader_for(custom_field, customized, value)
+        uploader = ImageUploader.new(customized, "custom_field-#{custom_field.id}")
+        uploader.retrieve_from_store!(value) if value
+        uploader
       end
     end
   end

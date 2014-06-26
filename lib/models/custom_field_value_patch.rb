@@ -33,9 +33,7 @@ module CustomFieldValuePatch
     end
 
     def uploader
-      @uploader ||= ImageUploader.new(customized, "custom_field-#{custom_field.id}")
-      @uploader.retrieve_from_store!(value) if value
-      @uploader
+      @uploader ||= Redmine::FieldFormat::ImageFormat.uploader_for(custom_field, customized, value)
     end
 
     def file_thumb_url
