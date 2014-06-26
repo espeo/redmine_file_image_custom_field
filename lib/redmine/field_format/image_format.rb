@@ -12,7 +12,6 @@ module Redmine
         uploader = self.class.uploader_for(custom_field, customized, value)
 
         if html
-          binding.pry
           view.link_to view.image_tag(uploader.versions[:thumb].url || uploader.url), uploader.url
         else
           value.to_s
