@@ -23,7 +23,7 @@ module Redmine
       end
 
       def self.uploader_for(custom_field, customized, value)
-        uploader = ImageUploader.new(customized, "custom_field-#{custom_field.id}")
+        uploader = EspeoFileImageCustomField::ImageUploader.new(customized, "custom_field-#{custom_field.id}")
         uploader.retrieve_from_store!(value) if value
         uploader
       end

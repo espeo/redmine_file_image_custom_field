@@ -1,4 +1,4 @@
-class ImageUploader < CarrierWave::Uploader::Base
+class EspeoFileImageCustomField::ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :file

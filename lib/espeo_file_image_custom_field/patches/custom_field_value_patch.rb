@@ -1,4 +1,4 @@
-module CustomFieldValuePatch
+module EspeoFileImageCustomField::Patches::CustomFieldValuePatch
   def self.included(base)
     base.extend         ClassMethods
     base.send :include, InstanceMethods
@@ -43,5 +43,5 @@ module CustomFieldValuePatch
 end
 
 Rails.application.config.to_prepare do
-  CustomFieldValue.send :include, CustomFieldValuePatch
+  CustomFieldValue.send :include, EspeoFileImageCustomField::Patches::CustomFieldValuePatch
 end
