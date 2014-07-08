@@ -1,4 +1,6 @@
-<!-- We replace this view only to add :multipart support -->
+<%= include_calendar_headers_tags %>
+<!-- We replace this view only to add :multipart support and calendar tags -->
+
 <%= labelled_form_for @project, :html => { :multipart => true } do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>
