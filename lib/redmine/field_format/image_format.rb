@@ -8,11 +8,16 @@ module Redmine
       add 'image'
       self.form_partial = 'custom_fields/formats/image'
 
-      def formatted_value(view, custom_field, value, customized=nil, html=false)
+      def formatted_value(view, custom_field, value, customized = nil, html = false, link = true)
         uploader = self.class.uploader_for(custom_field, customized, value)
 
         if html
-          view.link_to view.image_tag(uploader.versions[:thumb].url || uploader.url), uploader.url
+          img = view.image_tag(uploader.versions[:thumb].url || uploader.url)
+          if link
+            view.link_to img, uploader.url
+          else
+            img            
+          end
         else
           value.to_s
         end
