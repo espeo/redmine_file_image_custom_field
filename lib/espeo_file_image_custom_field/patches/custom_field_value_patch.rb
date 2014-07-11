@@ -21,12 +21,16 @@ module EspeoFileImageCustomField::Patches::CustomFieldValuePatch
     def value_with_file=(value)
       @value = value
       if is_file_format?
-        if value.is_a? ActionDispatch::Http::UploadedFile
+        @value = if value.is_a? ActionDispatch::Http::UploadedFile
           if uploader.store!(value)
-            @value = uploader.filename
+            uploader.filename
           else
-            @value = value_was || nil
+            value_was || nil
           end
+        elsif value == "_delete"
+          nil
+        else
+          @value
         end
       end
       @value

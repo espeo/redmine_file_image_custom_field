@@ -24,7 +24,9 @@ module Redmine
       end
 
       def edit_tag(view, tag_id, tag_name, custom_value, options={})
-        view.file_field_tag(tag_name, options.merge(:id => tag_id)) + view.image_tag(custom_value.file_thumb_url)
+        view.file_field_tag(tag_name, options.merge(:id => tag_id)) + 
+          view.image_tag(custom_value.file_thumb_url) + view.tag(:br) + 
+          remove_tag(view, tag_id, tag_name, custom_value)
       end
 
       def self.uploader_for(custom_field, customized, value)
