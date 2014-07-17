@@ -1,3 +1,0 @@
-= espeo_file_image_custom_field
-
-Adds ImageField and FileField to CustomField types.
