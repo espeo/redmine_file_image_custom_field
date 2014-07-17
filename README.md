@@ -1,4 +1,4 @@
-# File & Image CustomFields
+# File & Image Custom Fields
 
 ### A redmine plugin by Espeo Software.
 
@@ -16,3 +16,9 @@ Adds ImageField and FileField to CustomField types.
   # or on mac
   brew install imagemagick
   ```
+
+### Installation
+
+1. Make sure your redmine installation already meets the above *requirements*.
+
+2. Copy this plugin's contents or check out this repository into `/redmine/plugins/espeo_file_image_custom_field` directory.
