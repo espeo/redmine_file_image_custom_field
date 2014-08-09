@@ -1,5 +1,6 @@
 <%= include_calendar_headers_tags %>
 <!-- We replace this view only to add :multipart support and calendar tags -->
+<!-- This may cause some inconsistensies when Redmine gets updated or another plugin would want to replace this template. -->
 
 <%= labelled_form_for @project, :html => { :multipart => true } do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>

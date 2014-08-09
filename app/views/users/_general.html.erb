@@ -1,0 +1,10 @@
+<!-- We replace this view only to add :multipart support (for file & image custom fields) -->
+<!-- This may cause some inconsistensies when Redmine gets updated or another plugin would want to replace this template. -->
+
+<%= labelled_form_for @user, :html => { :multipart => true } do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <% if @user.active? && email_delivery_enabled? -%>
+    <p><label><%= check_box_tag 'send_information', 1, true %> <%= l(:label_send_information) %></label></p>
+  <% end -%>
+  <p><%= submit_tag l(:button_save) %></p>
+<% end %>
