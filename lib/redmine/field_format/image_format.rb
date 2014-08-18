@@ -24,15 +24,11 @@ module Redmine
       end
 
       def edit_tag(view, tag_id, tag_name, custom_value, options={})
-        view.file_field_tag(tag_name, options.merge(:id => tag_id)) + 
-          view.image_tag(custom_value.file_thumb_url) + view.tag(:br) + 
-          remove_tag(view, tag_id, tag_name, custom_value)
-      end
+        image = (view.link_to(view.image_tag(custom_value.file_thumb_url), custom_value.file_url) + view.tag(:br) if custom_value.value) || ''
 
-      def self.uploader_for(custom_field, customized, value)
-        uploader = EspeoFileImageCustomField::ImageUploader.new(customized, "custom_field-#{custom_field.id}")
-        uploader.retrieve_from_store!(value) if value
-        uploader
+        view.file_field_tag(tag_name, options.merge(:id => tag_id)) + 
+          image + 
+          remove_tag(view, tag_id, tag_name, custom_value)
       end
     end
   end

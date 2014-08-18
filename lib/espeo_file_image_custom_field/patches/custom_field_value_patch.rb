@@ -43,6 +43,10 @@ module EspeoFileImageCustomField::Patches::CustomFieldValuePatch
     def file_thumb_url
       uploader.versions[:thumb].url || uploader.url
     end
+
+    def file_url
+      uploader.url
+    end
   end
 end
 

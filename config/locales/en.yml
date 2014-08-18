@@ -1,3 +1,4 @@
 en:
   label_file: File
   label_image: Image
+  remove_existing_file: Remove existing file?

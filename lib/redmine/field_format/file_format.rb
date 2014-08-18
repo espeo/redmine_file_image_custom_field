@@ -8,14 +8,14 @@ module Redmine
       add 'file'
       self.form_partial = 'custom_fields/formats/file'
 
-      def formatted_value(view, custom_field, value, customized=nil, html=false)
+      def formatted_value(view, custom_field, value, customized = nil, html = false, link = true)
+        uploader = self.class.uploader_for(custom_field, customized, value)
+
         if html
-          if custom_field.url_pattern.present?
-            super
-          elsif custom_field.text_formatting == 'full'
-            view.textilizable(value, :object => customized)
+          if link
+            view.link_to value.to_s, uploader.url
           else
-            value.to_s
+            value.to_s            
           end
         else
           value.to_s
@@ -23,8 +23,10 @@ module Redmine
       end
 
       def edit_tag(view, tag_id, tag_name, custom_value, options={})
-        custom_value.value + 
-          view.file_field_tag(tag_name, options.merge(:id => tag_id)) + 
+        file_link = (view.link_to(custom_value.value, custom_value.file_url) + view.tag(:br) if custom_value.value) || ''
+
+        view.file_field_tag(tag_name, options.merge(:id => tag_id)) + 
+          file_link + 
           remove_tag(view, tag_id, tag_name, custom_value)
       end
 
@@ -34,8 +36,14 @@ module Redmine
 
       def remove_tag(view, tag_id, tag_name, custom_value)
         view.content_tag(:label) do
-          view.check_box_tag(tag_name, "_delete") + "Remove existing file?"
+          view.check_box_tag(tag_name, "_delete") + I18n.t(:remove_existing_file)
         end if custom_value.value
+      end
+
+      def self.uploader_for(custom_field, customized, value)
+        uploader = EspeoFileImageCustomField::ImageUploader.new(customized, "custom_field-#{custom_field.id}")
+        uploader.retrieve_from_store!(value) if value
+        uploader
       end
     end
   end
