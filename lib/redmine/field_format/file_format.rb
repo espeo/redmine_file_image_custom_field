@@ -36,7 +36,7 @@ module Redmine
 
       def remove_tag(view, tag_id, tag_name, custom_value)
         view.content_tag(:label) do
-          view.check_box_tag(tag_name, "_delete") + I18n.t(:remove_existing_file)
+          view.check_box_tag(tag_name, "_delete") + ::I18n.t(:remove_existing_file)
         end if custom_value.value
       end
 
