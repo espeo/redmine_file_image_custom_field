@@ -1,10 +1,10 @@
-# File & Image Custom Fields
+# File, Image & Relation Custom Fields
 
 ### A redmine plugin by Espeo Software.
 
-Adds 2 additional types for custom fields you can create: a file and an image.
+Adds 3 additional types for custom fields you can create: File, Image and Relation.
 
-Adds ImageField and FileField to CustomField types.
+Adds `ImageField`, `FileField` and `RelationField` to CustomField types.
 
 ## Requirements
 

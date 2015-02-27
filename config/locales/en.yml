@@ -1,4 +1,6 @@
 en:
   label_file: File
   label_image: Image
+  label_relation: Relation
+  label_relation_type: Relation type
   remove_existing_file: Remove existing file?

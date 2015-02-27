@@ -1,3 +1,5 @@
 pl:
   label_file: Plik
   label_image: Obraz
+  label_relation: Relacja
+  label_relation_type: Typ relacji

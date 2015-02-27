@@ -1,0 +1,2 @@
+<% classes = ActiveRecord::Base.descendants.select { |klass| klass.method_defined?(:name) && klass.respond_to?(:visible) && !(klass <= CustomField)} %>
+<p><%= f.select :relation_type, classes.map(&:model_name).sort, :label => :label_relation_type %></p>
